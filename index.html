@@ -71,7 +71,7 @@
 
   healthcare = L.geoJson.ajax("assets/california_healthcare.geojson",{
     onEachFeature: function (feature, layer) {
-      layer.bindPopup(feature.properties.facility_n);
+      layer.bindPopup("Name: " + feature.properties.facility_n + "</br>" + "Number of beds: " + feature.properties.number_of_);
     },
     pointToLayer: function (features, latlng) {
       var id = 0;
@@ -90,7 +90,10 @@
 
 
   L.geoJson.ajax("assets/california_county.geojson", {
-    style: style
+    style: style,
+    onEachFeature: function (feature, layer) {
+      layer.bindPopup("Name: " + feature.properties.NAME);
+    },
   }).addTo(mymap);
 
   colors = chroma.scale('Blues').colors(5);
@@ -128,7 +131,7 @@ legend.onAdd = function () {
 
     // Create Div Element and Populate it with HTML
     var div = L.DomUtil.create('div', 'legend');
-    div.innerHTML += '<b>% of Non-White Residents</b><br />';
+    div.innerHTML += '<b>% of People of Color</b><br />';
     div.innerHTML += '<i style="background: ' + colors[4] + '; opacity: 0.5"></i><p> 25%+ </p>';
     div.innerHTML += '<i style="background: ' + colors[3] + '; opacity: 0.5"></i><p> 18-25% </p>';
     div.innerHTML += '<i style="background: ' + colors[2] + '; opacity: 0.5"></i><p> 13-18% </p>';
