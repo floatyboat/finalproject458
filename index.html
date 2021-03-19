@@ -60,7 +60,7 @@
 
   L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png').addTo(mymap);
 
-  var colors = chroma.scale('RdYlGn').mode('lch').colors(7);
+  var colors = chroma.scale('Greens').mode('lch').colors(7);
 
 // 5. dynamically append style classes to this page. This style classes will be used for colorize the markers.
   for (i = 0; i < 7; i++) {
@@ -85,18 +85,18 @@
       return L.marker(latlng, {icon: L.divIcon({className: 'fa fa-hospital-o marker-color-' + (id + 1).toString() })});
     },
 
-    attribution: 'Demographic data @ US Census Bureau | Health care facility data @ California State GeoPortal | Basemap @ Cartodb | Made by Spencer Boat'
+    attribution: 'Read the introduction <a href=https://github.com/floatyboat/race_and_healthcare_CA>here</a> | Demographic data @ <a href=https://www.census.gov/quickfacts/CA>US Census Bureau</a> | Health care facility data @ <a href=https://gis.data.ca.gov/datasets/CHHSAgency::oshpd-healthcare-facilities?geometry=-161.141%2C31.057%2C-77.513%2C43.264>California State GeoPortal</a> | Basemap @ <a href=https://carto.com/>Cartodb</a> | Made by Spencer Boat'
   }).addTo(mymap);
 
 
   L.geoJson.ajax("assets/california_county.geojson", {
     style: style,
-    onEachFeature: function (feature, layer) {
-      layer.bindPopup("Name: " + feature.properties.NAME);
+    onEachFeature: function (features, layer) {
+      layer.bindPopup("Name: " + features.properties.NAME + "</br>" + "Total population: " + features.properties.map2_total_pop);
     },
   }).addTo(mymap);
 
-  colors = chroma.scale('Blues').colors(5);
+  colors = chroma.scale('Purples').colors(5);
 
 
     function setCountyColor(nonWhite) {
