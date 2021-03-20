@@ -40,6 +40,23 @@
           line-height: 16px;
           margin: 0;
       }
+      #text {
+          z-index: 500;
+          position: absolute;
+          width: 300px;
+          left: 25px;
+          bottom: 50px;
+          padding: 15px 15px 15px 15px;
+          border-radius: 10px;
+          background: #FFFFFF;
+          color: black;
+          opacity: 0.8;
+          font-family: 'Open Sans', sans-serif;
+      }
+
+      #title {
+        font-weight: bold;
+      }
     </style>
     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js"></script>
@@ -47,7 +64,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/1.3.4/chroma.min.js"></script>
 </head>
 <body>
-<!-- Our web map and content will go here -->
+
+<div id="text">
+    <div id="title">
+        Race and Healthcare in California
+    </div>
+    <p>
+         This project attempts to visually display healthcare inequality using existing government census and healthcare data.
+         This map will aim to show some factors that lead to an inequality of health outcomes between white people and people
+         of color, and the inherent racism that exists throughout the United States, using California as an example. This is
+         shown through the relative healthcare accessibility of areas with a large proportion of BIPOC population compared to
+         the  healthcare accessibility of areas with populations that are majority white.
+    </p>
+</div>
+
 <div id="map"></div>
 <script>
   var mymap = L.map('map', {
@@ -55,14 +85,13 @@
       zoom: 7,
       maxZoom: 10,
       minZoom: 3,
-      detectRetina: true // detect whether the sceen is high resolution or not.
+      detectRetina: true
   });
 
   L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png').addTo(mymap);
 
   var colors = chroma.scale('Greens').mode('lch').colors(7);
 
-// 5. dynamically append style classes to this page. This style classes will be used for colorize the markers.
   for (i = 0; i < 7; i++) {
     $('head').append($("<style> .marker-color-" + (i + 1).toString() + " { color: " + colors[i] + "; font-size: 15px; text-shadow: 0 0 3px #ffffff;} </style>"));
   }
@@ -123,13 +152,9 @@
 
   L.control.scale({position: 'bottomleft'}).addTo(mymap);
 
-  // 9. Create Leaflet Control Object for Legend
 var legend = L.control({position: 'topright'});
 
-// 10. Function that runs when legend is added to map
 legend.onAdd = function () {
-
-    // Create Div Element and Populate it with HTML
     var div = L.DomUtil.create('div', 'legend');
     div.innerHTML += '<b>% of People of Color</b><br />';
     div.innerHTML += '<i style="background: ' + colors[4] + '; opacity: 0.5"></i><p> 25%+ </p>';
